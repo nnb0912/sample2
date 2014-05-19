@@ -1,0 +1,48 @@
+<h2>在庫受領レポート登録（TEXTファイル）</h2>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>受領日付</th>
+      <th>FNSKU</th>
+      <th>出品者SKU</th>
+      <th>商品名</th>
+      <th>数量</th>
+      <th>FBA納品番号</th>
+      <th>FC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reps.each do |rep| %>
+      <tr>
+        <td><%= rep.receipt_date %></td>
+        <td><%= rep.fnsku %></td>
+        <td><%= rep.seller_sku %></td>
+        <td><%= rep.sku_name %></td>
+        <td><%= rep.qty %></td>
+        <td><%= rep.fba_shipment_id %></td>
+        <td><%= rep.fulfillment_center_id %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p>ページ:<%= @reps.current_page %> / <%= @reps.num_pages %></p>
+<p><%= @reps.total_count %>件中<%= @reps.offset_value %>
+～<%= @reps.offset_value + @reps.length %>件を表示しています。</p>
+
+<p><%= paginate @reps %></p>
+
+<br>
+<%= form_tag({controller: "fba_receipt_reports", action: "import_txt", method: "post"}, {multipart: true}) do %>
+  <div class="field">
+    <%= label_tag "TXTファイルを選択" %><br>
+    <%= file_field_tag :txt_file %>
+  </div>
+
+  <div class="actions">
+    <%= submit_tag "TXTファイルを読み込む"%>
+  </div>
+<% end %>
+
+<%= link_to '在庫受領レポートに戻る', fba_receipt_reports_path %>

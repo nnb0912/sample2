@@ -1,0 +1,13 @@
+<h2>出品詳細レポート登録（TEXTファイル）</h2>
+<%= form_tag({controller: "order_reports", action: "import_txt", method: "post"}, {multipart: true}) do %>
+  <div class="field">
+    <%= label_tag "TXTファイルを選択" %><br>
+    <%= file_field_tag :txt_file %>
+  </div>
+
+  <div class="actions">
+    <%= submit_tag "TXTファイルを読み込む"%>
+  </div>
+<% end %>
+
+<%= link_to '出品詳細レポートに戻る', order_reports_path %>
